@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/esbuild-plugins-community/esbuild-plugin-webpack-analyzer/compare/v1.1.0...v1.1.1) (2025-10-29)
+
+
+### Bug Fixes
+
+* fix esbuild peer dep ([a1692ab](https://github.com/esbuild-plugins-community/esbuild-plugin-webpack-analyzer/commit/a1692abe5d68cd1ade6bf45dfca38e3dc69330f0))
+
 ## [1.1.0](https://github.com/esbuild-plugins-community/esbuild-plugin-webpack-analyzer/compare/v1.0.2...v1.1.0) (2024-09-26)
 
 

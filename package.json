@@ -2,7 +2,7 @@
   "name": "@espcom/esbuild-plugin-webpack-analyzer",
   "author": "espcom",
   "license": "MIT",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "Webpack Bundle Analyzer integration for esbuild",
   "type": "module",
   "repository": {
@@ -33,7 +33,6 @@
     "esbuild": "0.28.1",
     "typescript": "7.0.1-rc",
     "husky": "9.1.7",
-
     "preact": "10.29.2",
     "mobx": "6.16.1",
     "@carrotsearch/foamtree": "3.6.1",

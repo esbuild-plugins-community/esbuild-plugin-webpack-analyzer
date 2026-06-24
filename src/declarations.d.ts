@@ -1,5 +1,5 @@
 declare module 'webpack-bundle-analyzer' {
-  import { TypeStats, TypeStartResponse } from './types.js';
+  import { TypeStartResponse, TypeStats } from './types.ts';
 
   export const start: (
     stats: TypeStats,

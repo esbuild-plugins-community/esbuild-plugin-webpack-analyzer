@@ -1,4 +1,4 @@
-import { Server } from 'node:http';
+import type { Server } from 'node:http';
 
 export type TypeStartResponse = {
   updateChartData: (params: TypeStats) => void;

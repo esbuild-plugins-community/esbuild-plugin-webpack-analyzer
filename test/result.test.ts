@@ -1,11 +1,11 @@
-import * as path from 'node:path';
 import * as assert from 'node:assert/strict';
+import * as path from 'node:path';
 import { describe, it } from 'node:test';
 
-import { build, BuildOptions } from 'esbuild';
+import { type BuildOptions, build } from 'esbuild';
 
-import { validateResult } from '../src/validators/validateResult.js';
-import { validateSetup } from '../src/validators/validateSetup.js';
+import { validateResult } from '../src/validators/validateResult.ts';
+import { validateSetup } from '../src/validators/validateSetup.ts';
 
 const nonObjects = [0, true, null, '', [], () => false];
 const nonTrue = [0, false, null, '', [], () => false, {}];
@@ -53,9 +53,7 @@ void describe('Validate result', async () => {
     } catch (error: any) {
       assert.match(
         error.message,
-        new RegExp(
-          '@espcom/esbuild-plugin-webpack-analyzer: "metafile" parameter must be set to "true" is esbuild config'
-        )
+        /@espcom\/esbuild-plugin-webpack-analyzer: "metafile" parameter must be set to "true" is esbuild config/
       );
     }
   });

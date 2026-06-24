@@ -1,16 +1,13 @@
 {
-  "include": [
-    "src",
-    "test",
-    "scripts",
-    "eslint.config.mjs",
-    "lint-staged.config.mjs"
-  ],
+  "include": ["src", "test", "scripts", "lint-staged.config.mjs"],
   "compilerOptions": {
-    "outDir": "dist",
+    "rootDir": ".",
     "target": "esnext",
     "module": "nodenext",
     "strict": true,
-    "skipLibCheck": true
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "types": ["node"]
   }
 }

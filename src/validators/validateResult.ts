@@ -1,6 +1,6 @@
-import { BuildResult, Metafile } from 'esbuild';
+import type { BuildResult, Metafile } from 'esbuild';
 
-import { pluginName } from '../constants.js';
+import { pluginName } from '../constants.ts';
 
 export function validateResult(result: BuildResult): BuildResult & { metafile: Metafile } {
   if (!result.metafile || Object.prototype.toString.call(result.metafile) !== '[object Object]') {

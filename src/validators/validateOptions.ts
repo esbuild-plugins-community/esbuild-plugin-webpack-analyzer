@@ -22,12 +22,6 @@ export function validateOptions(options?: TypeOptions) {
       }
     }
 
-    if (typeof options.open !== 'undefined') {
-      if (typeof options.open !== 'boolean') {
-        throw new Error(`${pluginName}: The "open" parameter must be a boolean`);
-      }
-    }
-
     if (typeof options.extensions !== 'undefined') {
       if (!Array.isArray(options.extensions)) {
         throw new Error(`${pluginName}: The "extensions" parameter must be an array`);

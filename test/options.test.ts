@@ -7,7 +7,6 @@ const nonObjects = [0, true, null, '', [], () => false];
 const nonArrays = [0, true, null, '', {}, () => false];
 const nonStrings = [0, true, null, [], () => false, {}];
 const nonNumbers = ['', true, null, [], () => false, {}];
-const nonBooleans = ['', null, [], () => false, {}, 0];
 const nonFunctions = ['', null, [], {}, 0, false];
 
 void describe('Validate options', async () => {
@@ -44,18 +43,6 @@ void describe('Validate options', async () => {
     nonNumbers.forEach((value: any) => {
       assert.throws(() => pluginWebpackAnalyzer({ port: value }), {
         message: '@espcom/esbuild-plugin-webpack-analyzer: The "port" parameter must be a number',
-      });
-    });
-  });
-
-  await it('options.open should be a boolean or undefined', () => {
-    assert.doesNotThrow(() => pluginWebpackAnalyzer({ open: undefined }));
-    assert.doesNotThrow(() => pluginWebpackAnalyzer({ open: true }));
-    assert.doesNotThrow(() => pluginWebpackAnalyzer({ open: false }));
-
-    nonBooleans.forEach((value: any) => {
-      assert.throws(() => pluginWebpackAnalyzer({ open: value }), {
-        message: '@espcom/esbuild-plugin-webpack-analyzer: The "open" parameter must be a boolean',
       });
     });
   });

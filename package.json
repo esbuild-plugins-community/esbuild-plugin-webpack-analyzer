@@ -23,19 +23,21 @@
     "upd": "pnpm run clear-modules && pnpm i --prefer-offline",
     "npm-publish": "pnpm run build && cd ./dist && npm publish --access public --tag latest && cd ../",
     "analyze": "biome check --no-errors-on-unmatched --write . && tsc --noEmit",
-    "build": "rm -rf ./dist && tsc -b ./tsconfig.esm.json && node ./scripts/genPackageFiles.ts",
+    "build": "rm -rf ./dist && tsc -b ./tsconfig.esm.json && node ./scripts/buildViewer.ts && node ./scripts/genPackageFiles.ts",
     "build-watch": "rm -rf ./dist && tsc -b ./tsconfig.esm.json --watch && node ./scripts/genPackageFiles.ts",
     "test": "pnpm run build && node --test --test-reporter=spec ./test/*.test.*"
-  },
-  "dependencies": {
-    "webpack-bundle-analyzer": "4.10.2"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.14",
     "@types/node": "26.0.0",
     "esbuild": "0.28.1",
     "typescript": "7.0.1-rc",
-    "husky": "9.1.7"
+    "husky": "9.1.7",
+
+    "preact": "10.29.2",
+    "mobx": "6.16.1",
+    "@carrotsearch/foamtree": "3.6.1",
+    "mobx-react": "9.2.2"
   },
   "peerDependencies": {
     "esbuild": ">=0.23"

@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.0](https://github.com/esbuild-plugins-community/esbuild-plugin-webpack-analyzer/compare/v1.1.1...v2.0.0) (2026-06-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* move to custom client bundle
+* move to esm-only
+
+### Features
+
+* move to custom client bundle ([f72c8fb](https://github.com/esbuild-plugins-community/esbuild-plugin-webpack-analyzer/commit/f72c8fba78b98a97cffeea3c2c6c7bd2da0c7bda))
+* move to esm-only ([7025b9e](https://github.com/esbuild-plugins-community/esbuild-plugin-webpack-analyzer/commit/7025b9e5f45b066e97c1b5cdab1aa9ffc7a6130d))
+
 ## [1.1.1](https://github.com/esbuild-plugins-community/esbuild-plugin-webpack-analyzer/compare/v1.1.0...v1.1.1) (2025-10-29)
 
 

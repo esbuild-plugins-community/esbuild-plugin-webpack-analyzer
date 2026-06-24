@@ -1,8 +1,8 @@
 import * as path from 'node:path';
 
-import { Metafile } from 'esbuild';
+import type { Metafile } from 'esbuild';
 
-import { TypeStats } from './types.js';
+import type { TypeStats } from './types.ts';
 
 type TypeInputFilePath = string;
 type TypeOutputFilePath = string;

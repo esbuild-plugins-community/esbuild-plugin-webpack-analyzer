@@ -1,6 +1,6 @@
-import { PluginBuild } from 'esbuild';
+import type { PluginBuild } from 'esbuild';
 
-import { pluginName } from '../constants.js';
+import { pluginName } from '../constants.ts';
 
 export function validateSetup(build: PluginBuild) {
   if (build.initialOptions.metafile !== true) {

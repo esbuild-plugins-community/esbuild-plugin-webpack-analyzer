@@ -47,6 +47,8 @@ node_modules
 build
 tmp
 .swc
+AGENTS.md
+*.tsbuildinfo
 
 npm-debug.*
 *.jks

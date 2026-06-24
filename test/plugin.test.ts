@@ -1,12 +1,11 @@
-import * as path from 'node:path';
 import * as assert from 'node:assert/strict';
+import * as path from 'node:path';
 import { describe, it, mock } from 'node:test';
 
-import { build, BuildOptions, context, Metafile } from 'esbuild';
-
-import { pluginWebpackAnalyzer } from '../src/index.js';
-import { TypeStartResponse } from '../src/types.js';
-import { getStats } from '../src/getStats.js';
+import { type BuildOptions, build, context, type Metafile } from 'esbuild';
+import { getStats } from '../src/getStats.ts';
+import { pluginWebpackAnalyzer } from '../src/index.ts';
+import type { TypeStartResponse } from '../src/types.ts';
 
 void describe('Plugin works', async () => {
   const config: BuildOptions = {

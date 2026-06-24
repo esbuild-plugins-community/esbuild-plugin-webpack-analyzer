@@ -1,12 +1,11 @@
+import type { Plugin } from 'esbuild';
 import { start } from 'webpack-bundle-analyzer';
-import { Plugin } from 'esbuild';
-
-import { TypeOptions, TypeStartResponse } from './types.js';
-import { pluginName } from './constants.js';
-import { getStats } from './getStats.js';
-import { validateResult } from './validators/validateResult.js';
-import { validateOptions } from './validators/validateOptions.js';
-import { validateSetup } from './validators/validateSetup.js';
+import { pluginName } from './constants.ts';
+import { getStats } from './getStats.ts';
+import type { TypeOptions, TypeStartResponse } from './types.ts';
+import { validateOptions } from './validators/validateOptions.ts';
+import { validateResult } from './validators/validateResult.ts';
+import { validateSetup } from './validators/validateSetup.ts';
 
 export const pluginWebpackAnalyzer = (options?: TypeOptions): Plugin => {
   validateOptions(options);

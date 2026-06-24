@@ -1,5 +1,5 @@
-import { TypeOptions } from '../types.js';
-import { pluginName } from '../constants.js';
+import { pluginName } from '../constants.ts';
+import type { TypeOptions } from '../types.ts';
 
 export function validateOptions(options?: TypeOptions) {
   if (typeof options !== 'undefined') {

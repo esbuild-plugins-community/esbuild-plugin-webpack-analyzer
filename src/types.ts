@@ -1,27 +1,38 @@
-import type { Server } from 'node:http';
-
-export type TypeStartResponse = {
-  updateChartData: (params: TypeStats) => void;
-  http: Server;
-  ws: any;
-};
+import type { Metafile } from 'esbuild';
 
 export type TypeOptions = {
   host?: string;
   port?: number;
-  open?: boolean;
-  getStartResponse?: (params: TypeStartResponse) => void;
+  getStartResponse?: (params: {
+    updateChartData: (metafile: Metafile) => void;
+    http: import('node:http').Server;
+  }) => void;
   extensions?: Array<string>;
 };
 
-export type TypeModule = {
+export type TypeModuleChartData = {
   id: string;
-  name: string;
-  size: number;
-  chunks: Array<string>;
+  label: string;
+  path: string;
+  statSize: number | undefined;
+  gzipSize: number | undefined;
 };
 
-export type TypeStats = {
-  assets: Array<{ name: string; chunks: Array<string> }>;
-  modules: Array<TypeModule>;
+export type TypeFolderChartData = {
+  label: string;
+  path: string;
+  statSize: number;
+  gzipSize: number | undefined;
+  groups: Array<TypeFolderChartData | TypeModuleChartData>;
 };
+
+export type TypeChartDataItem = {
+  label: string;
+  isAsset: true;
+  statSize: number | undefined;
+  gzipSize: number | undefined;
+  groups: Array<TypeFolderChartData | TypeModuleChartData>;
+  isInitialByEntrypoint: Record<string, boolean>;
+};
+
+export type TypeChartData = Array<TypeChartDataItem>;

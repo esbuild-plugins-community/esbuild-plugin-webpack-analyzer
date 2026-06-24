@@ -1,6 +1,9 @@
 {
   "include": ["src", "test", "scripts", "lint-staged.config.mjs"],
+  "exclude": ["node_modules", "client"],
   "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
     "rootDir": ".",
     "target": "esnext",
     "module": "nodenext",

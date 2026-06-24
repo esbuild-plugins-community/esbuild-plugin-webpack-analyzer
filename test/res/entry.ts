@@ -1,5 +1,4 @@
-// @ts-ignore
-import * as badger from 'istanbul-cobertura-badger';
+import * as preact from 'preact';
 
 export const test = 1;
-export { badger };
+export { preact };

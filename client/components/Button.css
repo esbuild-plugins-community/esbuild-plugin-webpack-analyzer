@@ -1,0 +1,30 @@
+.button {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  font: var(--main-font);
+  outline: none;
+  padding: 5px 7px;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+  white-space: nowrap;
+  color: var(--text-primary);
+}
+
+.button:focus,
+.button:hover {
+  background: var(--hover-bg);
+}
+
+.button.active {
+  background: #ffa500;
+  color: #000;
+}
+
+.button[disabled] {
+  cursor: default;
+}

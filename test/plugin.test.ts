@@ -3,9 +3,8 @@ import * as path from 'node:path';
 import { describe, it, mock } from 'node:test';
 
 import { type BuildOptions, build, context, type Metafile } from 'esbuild';
-import { getStats } from '../src/getStats.ts';
+import { getViewerData } from '../src/analyzer.ts';
 import { pluginWebpackAnalyzer } from '../src/index.ts';
-import type { TypeStartResponse } from '../src/types.ts';
 
 void describe('Plugin works', async () => {
   const config: BuildOptions = {
@@ -23,7 +22,7 @@ void describe('Plugin works', async () => {
   };
 
   await it('analyzer should start', async () => {
-    const spyLog = mock.method(console, 'log');
+    const spyLog = mock.method(console, 'info');
 
     await build({
       ...config,
@@ -34,17 +33,20 @@ void describe('Plugin works', async () => {
 
     assert.equal(
       spyLog.mock.calls[0].arguments[0],
-      '\x1B[1mWebpack Bundle Analyzer\x1B[22m is started at \x1B[1mhttp://127.0.0.1:8888\x1B[22m\n' +
-        'Use \x1B[1mCtrl+C\x1B[22m to close it'
+      'Esbuild Bundle Analyzer is started at http://127.0.0.1:8888\nUse Ctrl+C to close it'
     );
 
     spyLog.mock.restore();
   });
 
   await it('analyzer should update stats on rebuild', async () => {
-    const spyLog = mock.method(console, 'log');
+    const spyLog = mock.method(console, 'info');
 
-    let response: TypeStartResponse | undefined;
+    let response:
+      | {
+          updateChartData: (...args: Array<any>) => void;
+        }
+      | undefined;
 
     const ctx = await context({
       ...config,
@@ -66,8 +68,7 @@ void describe('Plugin works', async () => {
 
     assert.equal(
       spyLog.mock.calls[0].arguments[0],
-      '\x1B[1mWebpack Bundle Analyzer\x1B[22m is started at \x1B[1mhttp://127.0.0.1:8888\x1B[22m\n' +
-        'Use \x1B[1mCtrl+C\x1B[22m to close it'
+      'Esbuild Bundle Analyzer is started at http://127.0.0.1:8888\nUse Ctrl+C to close it'
     );
 
     await ctx.rebuild();
@@ -80,72 +81,114 @@ void describe('Plugin works', async () => {
     await ctx.dispose();
   });
 
-  await it('getStats works correctly', async () => {
+  await it('getViewerData works correctly', async () => {
     const sampleMetafile: Metafile = {
       inputs: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         'test/res/entry.ts': {
           bytes: 110,
-          imports: [
-            { path: 'istanbul-cobertura-badger', kind: 'import-statement', external: true },
-          ],
+          imports: [{ path: 'preact', kind: 'import-statement', external: true }],
           format: 'esm',
         },
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         'node_modules123/123/node_modules/test/res/entry.ts': {
           bytes: 110,
-          imports: [
-            { path: 'istanbul-cobertura-badger', kind: 'import-statement', external: true },
-          ],
+          imports: [{ path: 'preact', kind: 'import-statement', external: true }],
           format: 'esm',
         },
       },
       outputs: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         'entry.js': {
-          imports: [{ path: 'istanbul-cobertura-badger', kind: 'require-call', external: true }],
+          imports: [{ path: 'preact', kind: 'require-call', external: true }],
           exports: [],
           entryPoint: 'test/res/entry.ts',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          inputs: { 'test/res/entry.ts': { bytesInOutput: 83 } },
+          inputs: {
+            'test/res/entry.ts': { bytesInOutput: 83 },
+            'node_modules123/123/node_modules/test/res/entry.ts': { bytesInOutput: 41 },
+          },
           bytes: 1719,
         },
-        // eslint-disable-next-line @typescript-eslint/naming-convention
+
         'entry2.js': {
-          imports: [{ path: 'istanbul-cobertura-badger', kind: 'require-call', external: true }],
+          imports: [{ path: 'preact', kind: 'require-call', external: true }],
           exports: [],
           entryPoint: 'test/res/entry.ts',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           inputs: { 'test/res/entry.ts': { bytesInOutput: 83 } },
           bytes: 1719,
         },
       },
     };
 
-    assert.deepEqual(getStats(sampleMetafile, new Set(['.js', '.cjs', '.mjs', '.ts', '.tsx'])), {
-      assets: [
+    assert.deepEqual(getViewerData(sampleMetafile, new Set(['.js', '.cjs', '.mjs', '.ts'])), {
+      chartData: [
         {
-          chunks: ['entry.js'],
-          name: 'entry.js',
+          label: 'entry.js',
+          isAsset: true,
+          statSize: 124,
+          gzipSize: undefined,
+          groups: [
+            {
+              label: 'test/res',
+              path: './test/res',
+              statSize: 83,
+              gzipSize: undefined,
+              groups: [
+                {
+                  id: './test/res/entry.ts',
+                  label: 'entry.ts',
+                  path: './test/res/entry.ts',
+                  statSize: 83,
+                  gzipSize: undefined,
+                },
+              ],
+            },
+            {
+              label: 'node_modules/test/res',
+              path: './node_modules/test/res',
+              statSize: 41,
+              gzipSize: undefined,
+              groups: [
+                {
+                  id: './node_modules/test/res/entry.ts',
+                  label: 'entry.ts',
+                  path: './node_modules/test/res/entry.ts',
+                  statSize: 41,
+                  gzipSize: undefined,
+                },
+              ],
+            },
+          ],
+          isInitialByEntrypoint: { 'test/res/entry.ts': true },
         },
         {
-          chunks: ['entry2.js'],
-          name: 'entry2.js',
+          label: 'entry2.js',
+          isAsset: true,
+          statSize: 83,
+          gzipSize: undefined,
+          groups: [
+            {
+              label: 'test/res',
+              path: './test/res',
+              statSize: 83,
+              gzipSize: undefined,
+              groups: [
+                {
+                  id: './test/res/entry.ts',
+                  label: 'entry.ts',
+                  path: './test/res/entry.ts',
+                  statSize: 83,
+                  gzipSize: undefined,
+                },
+              ],
+            },
+          ],
+          isInitialByEntrypoint: { 'test/res/entry.ts': true },
         },
       ],
-      modules: [
-        {
-          chunks: ['entry.js', 'entry2.js'],
-          id: './test/res/entry.ts',
-          name: './test/res/entry.ts',
-          size: 83,
-        },
-      ],
+      entrypoints: ['test/res/entry.ts', 'test/res/entry.ts'],
     });
 
-    assert.deepEqual(getStats(sampleMetafile, new Set([])), {
-      assets: [],
-      modules: [],
+    assert.deepEqual(getViewerData(sampleMetafile, new Set([])), {
+      chartData: [],
+      entrypoints: [],
     });
   });
 });

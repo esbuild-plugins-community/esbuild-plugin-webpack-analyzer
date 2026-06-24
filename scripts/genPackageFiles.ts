@@ -13,7 +13,6 @@ const releasePkg = {
   repository: globalPkg.repository,
   type: 'module',
   sideEffects: false,
-  dependencies: globalPkg.dependencies,
   peerDependencies: globalPkg.peerDependencies,
   exports: globalPkg.exports,
   types: globalPkg.types,
